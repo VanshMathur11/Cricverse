@@ -1,5 +1,6 @@
 package com.cricverse.controller;
 
+import com.cricverse.dto.PlayerDTO;
 import com.cricverse.entity.Player;
 import com.cricverse.service.PlayerService;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class PlayerController {
     }
 
     @GetMapping
-    public List<Player> getAllPlayers() {
+    public List<PlayerDTO> getAllPlayers() {
         return playerService.getAllPlayers();
     }
 
