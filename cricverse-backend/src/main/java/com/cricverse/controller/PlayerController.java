@@ -22,6 +22,11 @@ public class PlayerController {
         return playerService.getAllPlayers();
     }
 
+    @GetMapping("/{id}")
+    public PlayerDTO getPlayerById(@PathVariable Long id) {
+        return playerService.getPlayerById(id);
+    }   
+
     @PostMapping
     public Player createPlayer(@RequestBody Player player) {
         return playerService.savePlayer(player);

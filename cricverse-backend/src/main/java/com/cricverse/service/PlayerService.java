@@ -30,6 +30,19 @@ public class PlayerService {
                 .toList();
     }
 
+    public PlayerDTO getPlayerById(Long id) {
+
+        Player player = playerRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Player not found"));
+
+        return PlayerDTO.builder()
+                .id(player.getId())
+                .name(player.getName())
+                .country(player.getCountry())
+                .role(player.getRole())
+                .build();
+    }
+
     public Player savePlayer(Player player) {
         return playerRepository.save(player);
     }
