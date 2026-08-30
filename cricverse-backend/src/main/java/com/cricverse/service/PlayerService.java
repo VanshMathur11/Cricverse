@@ -17,25 +17,7 @@ public class PlayerService {
         this.playerRepository = playerRepository;
     }
 
-    public List<PlayerDTO> getAllPlayers() {
-
-        List<Player> players = playerRepository.findAll();
-
-        return players.stream()
-                .map(player -> PlayerDTO.builder()
-                        .id(player.getId())
-                        .name(player.getName())
-                        .country(player.getCountry())
-                        .role(player.getRole())
-                        .build())
-                .toList();
-    }
-
-    public PlayerDTO getPlayerById(Long id) {
-
-        Player player = playerRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Player not found"));
-
+    private PlayerDTO convertToDto(Player player) {
         return PlayerDTO.builder()
                 .id(player.getId())
                 .name(player.getName())
@@ -44,7 +26,42 @@ public class PlayerService {
                 .build();
     }
 
+    public List<PlayerDTO> getAllPlayers() {
+
+        List<Player> players = playerRepository.findAll();
+
+        return players.stream()
+                .map(this::convertToDto)
+                .toList();
+    }
+
+    public PlayerDTO getPlayerById(Long id) {
+
+        Player player = playerRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Player not found"));
+
+        return convertToDto(player);
+    }
+
     public Player savePlayer(Player player) {
         return playerRepository.save(player);
+    }
+
+    public List<PlayerDTO> searchPlayers(String name) {
+
+        List<Player> players = playerRepository.findByNameContainingIgnoreCase(name);
+
+        return players.stream()
+                .map(this::convertToDto)
+                .toList();
+    }
+
+    public List<PlayerDTO> searchPlayerByRole(String role) {
+        
+        List<Player> players = playerRepository.findByRoleIgnoreCase(role);
+
+        return players.stream()
+                .map(this::convertToDto)
+                .toList();
     }
 }

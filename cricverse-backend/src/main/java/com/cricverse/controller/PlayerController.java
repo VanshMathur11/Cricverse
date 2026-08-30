@@ -25,10 +25,22 @@ public class PlayerController {
     @GetMapping("/{id}")
     public PlayerDTO getPlayerById(@PathVariable Long id) {
         return playerService.getPlayerById(id);
-    }   
+    }
 
     @PostMapping
     public Player createPlayer(@RequestBody Player player) {
         return playerService.savePlayer(player);
     }
+
+    @GetMapping("/search")
+    public List<PlayerDTO> searchPlayer(@RequestParam String name) {
+        return playerService.searchPlayers(name);
+    }
+
+    @GetMapping("/search/role")
+    public List<PlayerDTO> searchPlayerByRole(@RequestParam String role) {
+        return playerService.searchPlayerByRole(role);
+    }
+    
+    
 }
