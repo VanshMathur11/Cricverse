@@ -1,5 +1,6 @@
 package com.cricverse.service;
 
+import com.cricverse.dto.CreatePlayerRequest;
 import com.cricverse.dto.PlayerDTO;
 import com.cricverse.entity.Player;
 import com.cricverse.exception.ResourceNotFoundException;
@@ -26,6 +27,16 @@ public class PlayerService {
                 .build();
     }
 
+    private Player convertToEntity(CreatePlayerRequest request) {
+        return Player.builder()
+            .name(request.getName())
+            .country(request.getCountry())
+            .role(request.getRole())
+            .battingStyle(request.getBattingStyle())
+            .bowlingStyle(request.getBowlingStyle())
+            .build();
+    }
+
     public List<PlayerDTO> getAllPlayers() {
 
         List<Player> players = playerRepository.findAll();
@@ -43,8 +54,13 @@ public class PlayerService {
         return convertToDto(player);
     }
 
-    public Player savePlayer(Player player) {
-        return playerRepository.save(player);
+    public PlayerDTO savePlayer(CreatePlayerRequest request) {
+
+        Player player = convertToEntity(request);
+
+        Player savedPlayer = playerRepository.save(player);
+
+        return convertToDto(savedPlayer);
     }
 
     public List<PlayerDTO> searchPlayers(String name) {

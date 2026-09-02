@@ -1,8 +1,11 @@
 package com.cricverse.controller;
 
+import com.cricverse.dto.CreatePlayerRequest;
 import com.cricverse.dto.PlayerDTO;
-import com.cricverse.entity.Player;
 import com.cricverse.service.PlayerService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,8 +31,8 @@ public class PlayerController {
     }
 
     @PostMapping
-    public Player createPlayer(@RequestBody Player player) {
-        return playerService.savePlayer(player);
+    public PlayerDTO createPlayer(@Valid @RequestBody CreatePlayerRequest request) {
+        return playerService.savePlayer(request);
     }
 
     @GetMapping("/search")
