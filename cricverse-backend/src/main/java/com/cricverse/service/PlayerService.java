@@ -22,7 +22,6 @@ public class PlayerService {
         return PlayerDTO.builder()
                 .id(player.getId())
                 .name(player.getName())
-                .country(player.getCountry())
                 .role(player.getRole())
                 .build();
     }
@@ -30,7 +29,6 @@ public class PlayerService {
     private Player convertToEntity(CreatePlayerRequest request) {
         return Player.builder()
             .name(request.getName())
-            .country(request.getCountry())
             .role(request.getRole())
             .battingStyle(request.getBattingStyle())
             .bowlingStyle(request.getBowlingStyle())

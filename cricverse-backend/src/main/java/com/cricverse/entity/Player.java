@@ -19,7 +19,9 @@ public class Player {
     @Column(nullable = false)
     private String name;
 
-    private String country;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team_id")
+    private Team team;
 
     private String role;
 
